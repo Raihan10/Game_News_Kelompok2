@@ -5,6 +5,8 @@ import NewsList from './components/NewsList';
 import GameList from './components/gamelist';
 import News from './components/News';
 import AddNews from './components/AddNews';
+//import UpdateNewsThumbnail from './components/UpdateNewsThumbnail';
+import UploadNewsThumbnail from './components/UploadNewsThumbnail';
 
 
 Vue.use(VueRouter)
@@ -19,6 +21,12 @@ const routes = [
         path :"/api/news/:id_berita",
         name : 'News',
         component :News,
+        /*children: [
+            {
+                path: 'update-thumbnail',
+                component: UpdateNewsThumbnail,
+            }
+        ]*/
     },
     {
         path :"/api/news-add/",
@@ -29,6 +37,11 @@ const routes = [
         path :"/game",
         name : 'game',
         component :GameList,
+    },
+    {
+        path :"/api/news-update-thumbnail/:id_berita",
+        name : 'UploadNewsThumbnail',
+        component :UploadNewsThumbnail,
     }
 ];
 

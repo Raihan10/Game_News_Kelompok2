@@ -50,6 +50,15 @@
                         >
                         Edit
                       </v-btn>
+                      <v-btn
+                          class="ma-2"
+                          color="warning"
+                          dark
+                          width="110px"
+                          :to="'/api/news-update-thumbnail/' + news_item.id_berita"
+                        >
+                        Update Thumbnail
+                      </v-btn>
                         <v-dialog
                           v-model="dialog"
                           persistent
@@ -70,7 +79,7 @@
                         </template>
                         <v-card>
                           <v-card-title class="text-h8">
-                            Apakah Anda yakin untuk menghapus berita ini?
+                            Apakah Anda yakin untuk menghapus berita ini? (ID = :{{selectedIdBerita}})
                           </v-card-title>
                           <v-card-text></v-card-text>
                           <v-card-actions>
@@ -86,7 +95,7 @@
                               color="blue darken-1"
                               text
                               @click="dialog = false"
-                              @click.prevent="deleteNews(news_item.id_berita)"
+                              @click.prevent="deleteNews(selectedIdBerita)"
                             >
                               Yakin
                             </v-btn>
@@ -131,7 +140,8 @@ export default {
         id: 0,
         dialog: false,
         isLoading: false,
-        judul_berita: ""
+        judul_berita: "",
+        selectedIdBerita: null
       }
     },
     methods:{
@@ -163,6 +173,9 @@ export default {
             .catch(e => {
               console.log(e);
             });
+        },
+        selectedNews(id_berita) {
+          this.selectedIdBerita = id_berita
         }
     },
     mounted(){

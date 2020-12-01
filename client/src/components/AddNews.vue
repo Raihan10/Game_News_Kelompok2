@@ -1,26 +1,39 @@
 <template id="add-news">
   <div class="submit-form">
     <div v-if="!submitted">
-      <form>
-        <div class="form-group">
-            <label for="judul_berita">Judul Berita</label>
-            <input type="text" class="form-control" id="judul_berita"
-            v-model="news.judul_berita"
-            />
-        </div>
-        <div class="form-group">
-            <label for="kategori">kategori</label>
-            <input type="text" class="form-control" id="kategori"
-            v-model="news.kategori"
-            />
-        </div>
-        <div class="form-group">
-            <label for="isi">isi</label>
-            <input type="text" class="form-control" id="isi"
-            v-model="news.isi"
-            />
-        </div>
-    </form>
+      <div class="form-group">
+        <label for="judul_berita">Judul Berita</label>
+        <input
+          type="text"
+          class="form-control"
+          id="judul_berita"
+          required
+          v-model="news.judul_berita"
+          name="judul_berita"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="kategori">Kategori</label>
+        <input
+          class="form-control"
+          id="kategori"
+          required
+          v-model="news.kategori"
+          name="kategori"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="isi">Isi</label>
+        <input
+          class="form-control"
+          id="isi"
+          required
+          v-model="news.isi"
+          name="isi"
+        />
+      </div>
 
       <button @click="saveNews" class="btn btn-success">Submit</button>
     </div>
@@ -33,11 +46,10 @@
 </template>
 
 <script>
-//import NewsDataService from "../services/NewsDataService";
-import http from "@/http";
-import "bootstrap/dist/css/bootstrap.css";
+import NewsDataService from "../services/NewsDataService";
 
 export default {
+  template: '#add-news',
   name: "add-news",
   data() {
     return {
@@ -48,28 +60,27 @@ export default {
         kategori: "",
         thumbnail: null,
         isi: "",
-        createdAt: "",
-        updatedAt: "",
-        publish_date: ""
+        create_date: "2020-11-12",
+        lastupdate: "2020-11-12",
+        publish_date: "2020-11-12"
       },
       submitted: false
     };
   },
   methods: {
     saveNews() {
-      var newNews = {
-        id_game: this.news.id_game,
+      var data = {
+        id_game: this.news.id_berita,
         judul_berita: this.news.judul_berita,
         kategori: this.news.kategori,
         thumbnail: this.news.thumbnail,
         isi: this.news.isi,
-        createdAt: this.news.create_date,
-        updatedAt: this.news.lastupdate,
+        create_date: this.news.create_date,
+        lastupdate: this.news.lastupdate,
         publish_date: this.news.publish_date
       };
-      //var data = this.news;
 
-      http.post("http://localhost:8000/api/news", newNews)
+      NewsDataService.create(data)
         .then(response => {
           this.news.id_berita = response.data.id_berita;
           console.log(response.data);
